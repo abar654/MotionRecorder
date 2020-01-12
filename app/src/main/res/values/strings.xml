@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MotionRecorder</string>
+    <string name="main_title_label">Motion Recorder</string>
+    <string name="gps_title_label">GPS</string>
+    <string name="latitude_label">Lat:</string>
+    <string name="longitude_label">Lng:</string>
+    <string name="altitude_label">Alt:</string>
+    <string name="bearing_label">Bear:</string>
+    <string name="speed_label">Speed:</string>
+    <string name="accuracy_label">Acc:</string>
+    <string name="accel_title_label">Accelerometer</string>
+    <string name="x_label">x:</string>
+    <string name="y_label">y:</string>
+    <string name="z_label">z:</string>
+    <string name="button_label_start">Start Recording</string>
+    <string name="button_label_stop">Stop Recording</string>
+    <string name="empty_data">0</string>
+</resources>
