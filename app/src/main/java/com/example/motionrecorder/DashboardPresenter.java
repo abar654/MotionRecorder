@@ -14,7 +14,10 @@ class DashboardPresenter implements DashboardInteractor.MotionDataUpdatedListene
     }
 
     public void stopRecording() {
-        interactor.stopRecording();
+
+        int seconds = interactor.stopRecording();
+        view.showMessage("Recorded " + seconds + "s.");
+
     }
 
     public void startRecording() {
@@ -39,7 +42,7 @@ class DashboardPresenter implements DashboardInteractor.MotionDataUpdatedListene
     @Override
     public void onError(String message) {
         if(view != null) {
-            view.showError(message);
+            view.showMessage(message);
         }
     }
 

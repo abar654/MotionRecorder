@@ -23,6 +23,18 @@ class GpsData {
 
     }
 
+    //Creates an object with all fields being zero
+    public GpsData() {
+
+        latitude = 0;
+        longitude = 0;
+        altitude = 0;
+        bearing = 0;
+        speed = 0;
+        accuracy = 0;
+
+    }
+
     public double getLatitude() {
         return latitude;
     }

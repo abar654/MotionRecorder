@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
                     //Permission denied, update GPS title
                     TextView title = findViewById(R.id.gpsTitle);
                     title.setText("GPS: No Permission");
-                    showError("GPS function disabled - restart app to give permissions.");
+                    showMessage("GPS function disabled - restart app to give permissions.");
                 }
                 return;
             }
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
     }
 
     @Override
-    public void showError(String message) {
+    public void showMessage(String message) {
         Toast.makeText(this,message, Toast.LENGTH_LONG).show();
     }
 
