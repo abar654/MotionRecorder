@@ -11,15 +11,23 @@
     <style name="DataLabel">
         <item name="android:layout_margin">4dp</item>
         <item name="android:paddingLeft">4dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="DataValue">
         <item name="android:layout_margin">4dp</item>
         <item name="android:paddingLeft">4dp</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="SectionTitle">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">monospace</item>
     </style>
 
 </resources>
