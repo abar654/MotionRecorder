@@ -10,6 +10,7 @@ class DashboardInteractor implements MotionDataSensor.MotionDataSensorListener {
 
         void onGpsDataUpdate(GpsData data);
         void onAccelDataUpdate(AccelData data);
+        void onError(String message);
 
     }
 
@@ -64,6 +65,12 @@ class DashboardInteractor implements MotionDataSensor.MotionDataSensorListener {
         }
     }
 
+    @Override
+    public void onError(String message) {
+        for(MotionDataUpdatedListener listener: listeners) {
+            listener.onError(message);
+        }
+    }
 
 
 }

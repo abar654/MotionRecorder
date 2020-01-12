@@ -6,4 +6,6 @@ public interface DashboardView {
 
     void setAccel(AccelData data);
 
+    void showError(String message);
+
 }

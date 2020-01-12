@@ -36,6 +36,13 @@ class DashboardPresenter implements DashboardInteractor.MotionDataUpdatedListene
         }
     }
 
+    @Override
+    public void onError(String message) {
+        if(view != null) {
+            view.showError(message);
+        }
+    }
+
     public void onDestroy() {
         //Set to null and always check for null so that we do not try
         //to access the view activity if it has been destroyed.

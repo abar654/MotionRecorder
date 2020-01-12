@@ -23,10 +23,10 @@
         android:id="@+id/gpsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/data_area_border"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/data_area_shaded_top"
         android:stretchColumns="*"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
                 android:layout_span="4"
                 android:paddingLeft="4dp"
                 android:text="@string/gps_title_label"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="32sp" />
         </TableRow>
 
@@ -64,7 +64,14 @@
                 style="@style/DataValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_span="3"
                 android:text="@string/empty_data" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/longitudeLabel"
@@ -78,6 +85,7 @@
                 style="@style/DataValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_span="3"
                 android:text="@string/empty_data" />
 
         </TableRow>
@@ -156,10 +164,10 @@
         android:id="@+id/accelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/data_area_border"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/data_area_shaded_top"
         android:stretchColumns="*"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -177,67 +185,55 @@
                 android:layout_span="6"
                 android:paddingLeft="4dp"
                 android:text="@string/accel_title_label"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="32sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/xLabel"
+                style="@style/DataLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/x_label"
-                style="@style/DataLabel" />
+                android:text="@string/x_label" />
 
             <TextView
                 android:id="@+id/xValue"
+                style="@style/DataValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/empty_data"
-                style="@style/DataValue"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+                android:text="@string/empty_data" />
 
             <TextView
                 android:id="@+id/yLabel"
+                style="@style/DataLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/y_label"
-                style="@style/DataLabel" />
+                android:text="@string/y_label" />
 
             <TextView
                 android:id="@+id/yValue"
+                style="@style/DataValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/empty_data"
-                style="@style/DataValue"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+                android:text="@string/empty_data" />
 
             <TextView
                 android:id="@+id/zLabel"
+                style="@style/DataLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/z_label"
-                style="@style/DataLabel" />
+                android:text="@string/z_label" />
 
             <TextView
                 android:id="@+id/zValue"
+                style="@style/DataValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/empty_data"
-                style="@style/DataValue"/>
+                android:text="@string/empty_data" />
 
         </TableRow>
 

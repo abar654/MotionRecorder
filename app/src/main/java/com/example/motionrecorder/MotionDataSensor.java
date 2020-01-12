@@ -6,12 +6,16 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.os.Looper;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-class MotionDataSensor implements SensorEventListener {
+class MotionDataSensor extends LocationCallback implements SensorEventListener {
 
     private MotionDataSensorListener listener;
     private SensorManager sensorManager;
@@ -25,6 +29,7 @@ class MotionDataSensor implements SensorEventListener {
 
         void onGpsDataUpdate(GpsData data);
         void onAccelDataUpdate(AccelData data);
+        void onError(String message);
 
     }
 
@@ -38,7 +43,14 @@ class MotionDataSensor implements SensorEventListener {
             //Get the client
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
-            //Now use the client to actually get GPS updates
+            //Create a LocationRequest
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setInterval(SAMPLING_PERIOD/10000);
+            locationRequest.setFastestInterval(SAMPLING_PERIOD/10000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+            //Now use the client to set this object to get GPS updates
+            fusedLocationClient.requestLocationUpdates(locationRequest, this, Looper.getMainLooper());
 
         }
 
@@ -65,4 +77,18 @@ class MotionDataSensor implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         //Don't need to do anything
     }
+
+    @Override
+    public void onLocationResult(LocationResult locationResult) {
+
+        if(locationResult != null) {
+            Location latest = locationResult.getLastLocation();
+            if(latest != null) {
+                GpsData update = new GpsData(latest);
+                listener.onGpsDataUpdate(update);
+            }
+        }
+
+    }
+
 }

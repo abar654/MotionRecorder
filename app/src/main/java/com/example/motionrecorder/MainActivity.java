@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements DashboardView {
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
         isStarted = false;
         gpsPermission = false;
 
+        //Try to get permissions for GPS
+        getPermissions();
+
         //Create a presenter
         presenter = new DashboardPresenter(this, new DashboardInteractor(this, gpsPermission));
 
@@ -74,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
             if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 //If not granted request the permission
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_LOCATION_REQUEST);
+            } else {
+                //Granted so set permission to true
+                gpsPermission = true;
             }
 
         }
@@ -92,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
                     //Permission denied, update GPS title
                     TextView title = findViewById(R.id.gpsTitle);
                     title.setText("GPS: No Permission");
+                    showError("GPS function disabled - restart app to give permissions.");
                 }
                 return;
             }
@@ -122,17 +131,34 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
     @Override
     public void setGps(GpsData data) {
 
-        //TODO
+        DecimalFormat df = new DecimalFormat("##0.0000000");
+
+        latitude.setText(String.valueOf(df.format(data.getLatitude())));
+        longitude.setText(String.valueOf(df.format(data.getLongitude())));
+
+        df.applyPattern("###0.0");
+        altitude.setText(String.valueOf(df.format(data.getAltitude())));
+        accuracy.setText(String.valueOf(df.format(data.getAccuracy())));
+
+        df.applyPattern("##0.0");
+        bearing.setText(String.valueOf(df.format(data.getBearing())));
+        speed.setText(String.valueOf(df.format(data.getSpeed())));
 
     }
 
     @Override
     public void setAccel(AccelData data) {
 
-        accelX.setText(String.valueOf(data.getX()));
-        accelY.setText(String.valueOf(data.getY()));
-        accelZ.setText(String.valueOf(data.getZ()));
+        DecimalFormat df = new DecimalFormat("##0.00");
+        accelX.setText(String.valueOf(df.format(data.getX())));
+        accelY.setText(String.valueOf(df.format(data.getY())));
+        accelZ.setText(String.valueOf(df.format(data.getZ())));
 
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this,message, Toast.LENGTH_LONG).show();
     }
 
     @Override
