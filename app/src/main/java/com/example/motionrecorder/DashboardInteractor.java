@@ -7,8 +7,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * DashboardInteractor provides access to the Model of the app.
+ */
 class DashboardInteractor implements MotionDataSensor.MotionDataSensorListener {
 
+    /**
+     * An interface for classes which need to bo notified when MotionData updates
+     * are available.
+     */
     public interface MotionDataUpdatedListener {
 
         void onGpsDataUpdate(GpsData data);
@@ -18,32 +25,29 @@ class DashboardInteractor implements MotionDataSensor.MotionDataSensorListener {
     }
 
     private Context context;
-    private ArrayList<MotionDataUpdatedListener> listeners;
     private Recorder recorder;
     private MotionDataSensor sensor;
+    private ArrayList<MotionDataUpdatedListener> listeners;
+
     private AccelData currentAccelData;
     private GpsData currentGpsData;
 
     public DashboardInteractor(Context context, boolean gpsPermission) {
 
-        //Create the listeners list
+        //Create an array to hold listeners to be notified upon update
         listeners = new ArrayList<MotionDataUpdatedListener>();
 
         this.context = context;
-
         recorder = null;
 
         //Set initial values for Gps and Accel Data
         currentAccelData = new AccelData(0, 0, 0);
         currentGpsData = new GpsData();
 
-        //Create a sensor object
+        //Create a MotionDataSensor
+        //Pass this object as a listener to receive updates
         sensor = new MotionDataSensor(context, this, gpsPermission);
 
-    }
-
-    public void addMotionDataUpdatedListener(MotionDataUpdatedListener listener) {
-        listeners.add(listener);
     }
 
     public void startRecording() {
@@ -74,7 +78,7 @@ class DashboardInteractor implements MotionDataSensor.MotionDataSensorListener {
         int seconds = 0;
 
         //If recorder object exists stop it recording
-        //Must check because this may be called without recording starting
+        //Must check because this may be called without recorder starting
         if(recorder != null) {
 
             //Stop the recording
@@ -115,5 +119,7 @@ class DashboardInteractor implements MotionDataSensor.MotionDataSensorListener {
         }
     }
 
-
+    public void addMotionDataUpdatedListener(MotionDataUpdatedListener listener) {
+        listeners.add(listener);
+    }
 }

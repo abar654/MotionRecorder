@@ -12,10 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements DashboardView {
 
+    //References to views that are regularly updated
     private TextView latitude;
     private TextView longitude;
     private TextView altitude;
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
     private TextView accelY;
     private TextView accelZ;
     private Button startStop;
+
+    //The presenter which connects this View with the Model
     private DashboardPresenter presenter;
 
     private boolean isStarted;
@@ -51,13 +53,15 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
         accelZ = findViewById(R.id.zValue);
         startStop = findViewById(R.id.startStopButton);
 
+        //Initialise flags
         isStarted = false;
         gpsPermission = false;
 
         //Try to get permissions for GPS
         getPermissions();
 
-        //Create a presenter
+        //Create a presenter and give it an Interactor to connect to
+        //Interactor requires context so that it can access sensors and file system
         presenter = new DashboardPresenter(this, new DashboardInteractor(this, gpsPermission));
 
         //Connect an onclick listener to the button
@@ -70,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
 
     }
 
+    /**
+     * Gets the permissions required to access user location
+     */
     private void getPermissions() {
 
         //Only need runtime permissions for Marshmallow or later
@@ -88,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
 
     }
 
+    /**
+     * Callback for permission request
+     */
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
         switch (requestCode) {
@@ -169,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements DashboardView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Must let the presenter do clean up as well
         presenter.onDestroy();
     }
 }

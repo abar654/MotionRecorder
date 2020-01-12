@@ -1,5 +1,8 @@
 package com.example.motionrecorder;
 
+/**
+ * A presenter to connect the Dashboard View with the Dashboard Model (i.e. Interactor).
+ */
 class DashboardPresenter implements DashboardInteractor.MotionDataUpdatedListener {
 
     private DashboardView view;
@@ -9,6 +12,8 @@ class DashboardPresenter implements DashboardInteractor.MotionDataUpdatedListene
 
         this.view = view;
         this.interactor = dashboardInteractor;
+
+        //Add the presenter as a listener to receive MotionData updates
         dashboardInteractor.addMotionDataUpdatedListener(this);
 
     }
@@ -16,8 +21,11 @@ class DashboardPresenter implements DashboardInteractor.MotionDataUpdatedListene
     public void stopRecording() {
 
         int seconds = interactor.stopRecording();
-        view.showMessage("Recorded " + seconds + "s.");
 
+        //Notify the user that recording has stopped, if activity is still running.
+        if(view != null) {
+            view.showMessage("Recorded " + seconds + "s.");
+        }
     }
 
     public void startRecording() {

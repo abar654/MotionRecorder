@@ -9,26 +9,37 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 
+/**
+ * A class for logging accelerometer and GPS data to a CSV file at a regular interval.
+ */
 class Recorder implements DashboardInteractor.MotionDataUpdatedListener{
 
+    //Data model
     private AccelData currentAccelData;
     private GpsData currentGpsData;
+
+    //Outputs
     private File outputFile;
     private FileOutputStream outputStream;
     private PrintWriter output;
+
+    //Handler for repeated task
     private Handler handler;
     private Runnable recordTask;
+
     private int numRecordings;
     private boolean isRecording;
 
-    private static final int SAMPLING_PERIOD = 100;
+    private static final int SAMPLING_PERIOD = 100; //In milliseconds
     private static final String HEADER = "Timestamp, latitude, longitude, bearing, altitude, speed, accuracy, accel_x, accel_y, accel_z\n";
 
 
     public Recorder(AccelData accelData, GpsData gpsData, File outputFile) {
 
+        //Initialise the data model. These could contain all zeros if data is unavailable.
         currentAccelData = accelData;
         currentGpsData = gpsData;
+
         this.outputFile = outputFile;
         handler = new Handler();
         isRecording = false;
@@ -37,6 +48,7 @@ class Recorder implements DashboardInteractor.MotionDataUpdatedListener{
 
     public void start() {
 
+        //Count the number of records made to report to user.
         //Set numRecording back to 0
         numRecordings = 0;
 
@@ -49,7 +61,7 @@ class Recorder implements DashboardInteractor.MotionDataUpdatedListener{
             //Write the header file
             output.write(HEADER);
 
-            //Create the task
+            //Create the record task
             recordTask = new Runnable() {
                 @Override
                 public void run() {

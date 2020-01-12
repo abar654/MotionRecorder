@@ -13,18 +13,15 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
+/**
+ * A class for subscribing to, receiving and returning GPS and Accelerometer data.
+ */
 class MotionDataSensor extends LocationCallback implements SensorEventListener {
 
-    private MotionDataSensorListener listener;
-    private SensorManager sensorManager;
-    private Sensor accelSensor;
-
-    private FusedLocationProviderClient fusedLocationClient;
-
-    private static final int SAMPLING_PERIOD = 100000;
-
+    /**
+     * Interface which must be implemented to receive data from this class.
+     */
     public interface MotionDataSensorListener {
 
         void onGpsDataUpdate(GpsData data);
@@ -33,8 +30,16 @@ class MotionDataSensor extends LocationCallback implements SensorEventListener {
 
     }
 
+    private MotionDataSensorListener listener;
+    private SensorManager sensorManager;
+    private Sensor accelSensor;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private static final int SAMPLING_PERIOD = 100000; //In microseconds
+
     public MotionDataSensor(Context context, MotionDataSensorListener listener, boolean gpsPermission) {
 
+        //Save the class which was passed in as the listener
         this.listener = listener;
 
         //Start the GpsSensor
@@ -49,12 +54,12 @@ class MotionDataSensor extends LocationCallback implements SensorEventListener {
             locationRequest.setFastestInterval(SAMPLING_PERIOD/10000);
             locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-            //Now use the client to set this object to get GPS updates
+            //Use the client to set this object to get GPS updates
             fusedLocationClient.requestLocationUpdates(locationRequest, this, Looper.getMainLooper());
 
         }
 
-        //Start the AccelSensor
+        //Start the Accelerometer Sensor
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
@@ -62,6 +67,9 @@ class MotionDataSensor extends LocationCallback implements SensorEventListener {
 
     }
 
+    /**
+     * Callback to receive accelerometer data updates.
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
 
@@ -78,6 +86,9 @@ class MotionDataSensor extends LocationCallback implements SensorEventListener {
         //Don't need to do anything
     }
 
+    /**
+     * Callback to receive GPS data updates.
+     */
     @Override
     public void onLocationResult(LocationResult locationResult) {
 
